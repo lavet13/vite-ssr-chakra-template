@@ -20,6 +20,7 @@ const Loadable =
     );
 
 const NotFound = Loadable(lazy(() => import('./pages/layout/__not-found')));
+const Header = Loadable(lazy(() => import('./pages/layout/__header')));
 
 const PagePathsWithComponents: Record<string, any> = import.meta.glob(
   './pages/**/*.tsx'
@@ -78,7 +79,7 @@ const filteredRoutes = routes.filter(
 const App = () => {
   return (
     <Routes>
-      <Route path='/'>
+      <Route path='/' element={<Header />}>
         {filteredRoutes.map(({ path, component: ReactComponent }) => (
           <Route key={path} path={path} element={<ReactComponent />} />
         ))}
@@ -89,3 +90,4 @@ const App = () => {
 };
 
 export default App;
+

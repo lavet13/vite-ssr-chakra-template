@@ -7,6 +7,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import { ColorModeScript } from '@chakra-ui/react';
 import theme from './src/theme';
 import { ChakraProvider } from './src/theme/provider';
+import ReactQueryProvider from './src/react-query/react-query-provider';
 
 export function render(
   req: Request,
@@ -18,9 +19,11 @@ export function render(
     <Html>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <StaticRouter location={url}>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
+        <ReactQueryProvider>
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
+        </ReactQueryProvider>
       </StaticRouter>
     </Html>,
     {
