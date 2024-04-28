@@ -27,7 +27,7 @@ function Html({ children }: HtmlProps) {
         {viteScripts}
         <link rel="shortcut icon" href="/vite.svg" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>FELD</title>
+        <title>Vite + React + SSR + Chakra-UI</title>
       </head>
       <body>
         <div id="root">{children}</div>

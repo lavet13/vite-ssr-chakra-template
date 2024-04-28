@@ -6,16 +6,23 @@ import { Route, Routes } from 'react-router-dom';
 // entries. For example, we could import font.css
 
 const Loadable =
-  (Component: React.ComponentType) => (props: JSX.IntrinsicAttributes) => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Component {...props} />
-    </Suspense>
-  );
+  (Component: React.ComponentType) => (props: JSX.IntrinsicAttributes) =>
+    (
+      <Suspense
+        fallback={
+          <Center minH="100vh" width={'full'}>
+            <Spinner />
+          </Center>
+        }
+      >
+        <Component {...props} />
+      </Suspense>
+    );
 
 const NotFound = Loadable(lazy(() => import('./pages/layout/__not-found')));
 
 const PagePathsWithComponents: Record<string, any> = import.meta.glob(
-  './pages/**/*.tsx',
+  './pages/**/*.tsx'
 );
 
 console.log({
@@ -60,26 +67,24 @@ console.log({ routes });
 
 const filteredRoutes = routes.filter(
   (
-    route,
+    route
   ): route is {
     name: string;
     path: string;
     component: (props: JSX.IntrinsicAttributes) => JSX.Element;
-  } => route !== null,
+  } => route !== null
 );
 
 const App = () => {
   return (
-    <Suspense fallback={<Center height={'max-content'}><Spinner /></Center>}>
-      <Routes>
-        <Route path='/'>
-          {filteredRoutes.map(({ path, component: ReactComponent }) => (
-            <Route key={path} path={path} element={<ReactComponent />} />
-          ))}
-          <Route path='*' element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path='/'>
+        {filteredRoutes.map(({ path, component: ReactComponent }) => (
+          <Route key={path} path={path} element={<ReactComponent />} />
+        ))}
+        <Route path='*' element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };
 
